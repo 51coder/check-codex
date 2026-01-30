@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Check Codex Demo</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #f5f7ff, #eef4ff 55%, #ffffff);
+        color: #1f2a44;
+      }
+
+      header {
+        padding: 24px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      header span {
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #4b5cc4;
+      }
+
+      main {
+        min-height: calc(100vh - 120px);
+        display: grid;
+        place-items: center;
+        padding: 40px 24px 80px;
+      }
+
+      .card {
+        width: min(920px, 100%);
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 24px 60px rgba(31, 42, 68, 0.12);
+        display: grid;
+        gap: 24px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 12px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(32px, 4vw, 48px);
+      }
+
+      p {
+        margin: 0;
+        line-height: 1.7;
+        color: #4a5673;
+        font-size: 16px;
+      }
+
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        padding: 12px 22px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .primary {
+        background: #4b5cc4;
+        color: #ffffff;
+        box-shadow: 0 12px 24px rgba(75, 92, 196, 0.35);
+      }
+
+      .ghost {
+        background: #eef1ff;
+        color: #4b5cc4;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+      }
+
+      .grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .tile {
+        border-radius: 16px;
+        padding: 18px;
+        background: #f6f8ff;
+        border: 1px solid #e3e9ff;
+      }
+
+      .status {
+        padding: 12px 16px;
+        background: #f9fbff;
+        border-radius: 12px;
+        border: 1px dashed #cad3ff;
+        font-size: 14px;
+        color: #3a476a;
+      }
+
+      footer {
+        text-align: center;
+        padding: 16px;
+        font-size: 12px;
+        color: #98a2c8;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span>Demo Page</span>
+      <div id="clock">加载中…</div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div class="hero">
+          <h1>你好，这里是一个可访问的 Demo Web 页面</h1>
+          <p>
+            这是一个纯静态页面，包含按钮交互、实时状态展示以及响应式布局，
+            直接用浏览器打开 <code>index.html</code> 即可访问。
+          </p>
+        </div>
+
+        <div class="cta">
+          <button class="primary" id="actionBtn">点我触发状态</button>
+          <button class="ghost" id="resetBtn">重置状态</button>
+        </div>
+
+        <div class="status" id="status">当前状态：等待你的操作 👋</div>
+
+        <div class="grid">
+          <div class="tile">✅ 轻量静态页面</div>
+          <div class="tile">⚡ 实时交互提示</div>
+          <div class="tile">📱 移动端自适应</div>
+          <div class="tile">🎨 简洁现代配色</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>Made for /workspace/check-codex</footer>
+
+    <script>
+      const statusEl = document.getElementById("status");
+      const actionBtn = document.getElementById("actionBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const clockEl = document.getElementById("clock");
+
+      const statusMessages = [
+        "状态更新：按钮已经被点击 ✅",
+        "状态更新：一切运行正常 🚀",
+        "状态更新：页面响应良好 ✨",
+      ];
+
+      const updateClock = () => {
+        const now = new Date();
+        clockEl.textContent = now.toLocaleString("zh-CN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+      };
+
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      actionBtn.addEventListener("click", () => {
+        const message =
+          statusMessages[Math.floor(Math.random() * statusMessages.length)];
+        statusEl.textContent = message;
+      });
+
+      resetBtn.addEventListener("click", () => {
+        statusEl.textContent = "当前状态：已重置，继续体验吧 ✨";
+      });
+    </script>
+  </body>
+</html>
